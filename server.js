@@ -1,6 +1,6 @@
-const express = 'express';
-const router = require('./users/userRouter')
-const server = express()
+const express = require('express');
+const router = require('./users/userRouter');
+const server = express();
 
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`)
