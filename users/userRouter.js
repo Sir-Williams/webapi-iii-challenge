@@ -14,7 +14,16 @@ router.post('/', validateUser, (req, res) => {
 });
 
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
+    if(req.body){
+        postDb.insert(req.body)
+            .then(post => {
+                res.status(200).json(post);
+            })
+            .catch(err => {
+                res.status(500).json({error: 'There was an error posting to the database.'})
+            })
 
+    }
 });
 
 router.get('/', (req, res) => {
@@ -32,7 +41,15 @@ router.get('/:id', validateUserId, (req, res) => {
 });
 
 router.get('/:id/posts', (req, res) => {
+    const id = req.params.id;
 
+    userDb.getUserPosts(id)
+        .then(posts => {
+            res.status(200).json(posts);
+        })
+        .catch(err => {
+            res.status(500).json({error: 'error retrieving user posts'});
+        });
 });
 
 router.delete('/:id', validateUserId, (req, res) => {
@@ -89,7 +106,7 @@ function validateUser(req, res, next) {
 };
 
 function validatePost(req, res, next) {
-    if (!body || !text) {
+    if ( !req.body || !req.body.text) {
         res.status(400).json({ message: 'Must inster bost and text'})
     } else {
         next();
