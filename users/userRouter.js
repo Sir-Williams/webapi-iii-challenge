@@ -20,7 +20,7 @@ router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
                 res.status(200).json(post);
             })
             .catch(err => {
-                res.status(500).json({error: 'There was an error posting to the database.'})
+                res.status(500).json({error: 'Error posting to database.'})
             })
 
     }
